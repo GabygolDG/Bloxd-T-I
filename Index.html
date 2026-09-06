@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloxd T-I | TypeScript Injector Hub</title>
+    <style>
+        :root {
+            --bg-main: #0c0c10;
+            --bg-panel: rgba(18, 18, 24, 0.95);
+            --primary: #7c4dff;
+            --primary-light: #b388ff;
+            --accent: #00ffcc;
+            --text-main: #ffffff;
+            --text-muted: #a0a0ab;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(124, 77, 255, 0.2);
+            background: rgba(12, 12, 16, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-light);
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .main-container {
+            flex: 1;
+            width: 92%;
+            max-width: 800px;
+            margin: 20px auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-panel);
+            border: 1px solid rgba(124, 77, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--primary-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            background: #15151c;
+            border: 1px solid #333342;
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+
+        textarea {
+            height: 120px;
+            font-family: monospace;
+            color: var(--accent);
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .mod-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mod-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+
+        .mod-info p {
+            margin: 0;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .mod-actions button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .mod-actions button.del {
+            background: #ff5252;
+        }
+
+        .tutorial-box {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .tutorial-box strong {
+            color: var(--text-main);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Bloxd T-I Hub</h1>
+        <p>TypeScript Injector Public Studio & Script Manager</p>
+    </header>
+
+    <div class="main-container">
+        <!-- Criador de Mods Público -->
+        <div class="card">
+            <h2>Criar Novo Script / Mod</h2>
+            <div class="input-group">
+                <label>Nome do Mod</label>
+                <input type="text" id="public-mod-name" placeholder="Ex: Super Pulo / SpeedMod">
+            </div>
+            <div class="input-group">
+                <label>Código JavaScript / TypeScript</label>
+                <textarea id="public-mod-code" placeholder="// Escreva seu código aqui...&#10;alert('Mod executado!');"></textarea>
+            </div>
+            <button class="btn" id="save-public-mod">Salvar no Meu Hub</button>
+        </div>
+
+        <!-- Seus Mods Salvos -->
+        <div class="card">
+            <h2>Meus Mods Salvos (Cloud / Local)</h2>
+            <div id="public-mods-list">
+                <p style="text-align: center; color: var(--text-muted); font-size: 13px;">Nenhum mod criado ainda.</p>
+            </div>
+        </div>
+
+        <!-- Guia Público para os Jogadores -->
+        <div class="card">
+            <h2>Como usar no Bloxd.io</h2>
+            <div class="tutorial-box">
+                <p>1. Crie e teste seus scripts aqui no site público do <strong>Bloxd T-I</strong>.</p>
+                <p>2. Copie o código gerado do seu mod.</p>
+                <p>3. Injete utilizando sua extensão de UserScript compatível no navegador para rodar direto por dentro do jogo oficial!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Bloxd T-I Project &bull; Desenvolvido por Rubens
+    </footer>
+
+    <script>
+        // Gerenciamento de Mods no Site Público
+        let publicMods = JSON.parse(localStorage.getItem('bloxd_ti_public_hub') || '[]');
+
+        const nameInput = document.getElementById('public-mod-name');
+        const codeInput = document.getElementById('public-mod-code');
+        const saveBtn = document.getElementById('save-public-mod');
+        const container = document.getElementById('public-mods-list');
+
+        function renderPublicMods() {
+            if (publicMods.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 13px;">Nenhum mod criado ainda.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            publicMods.forEach((mod, index) => {
+                container.innerHTML += `
+                    <div class="mod-item">
+                        <div class="mod-info">
+                            <h4>${mod.name}</h4>
+                            <p>${mod.code.substring(0, 30)}...</p>
+                        </div>
+                        <div class="mod-actions">
+                            <button onclick="copyCode(${index})">Copiar</button>
+                            <button class="del" onclick="deleteMod(${index})">Excluir</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        saveBtn.onclick = () => {
+            const name = nameInput.value.trim();
+            const code = codeInput.value;
+            if (!name || !code) {
+                alert('Preencha o nome e o código do mod.');
+                return;
+            }
+            publicMods.push({ name, code });
+            localStorage.setItem('bloxd_ti_public_hub', JSON.stringify(publicMods));
+            nameInput.value = '';
+            codeInput.value = '';
+            renderPublicMods();
+            alert('Mod salvo com sucesso no Hub!');
+        };
+
+        window.copyCode = (index) => {
+            navigator.clipboard.writeText(publicMods[index].code);
+            alert('Código copiado para a área de transferência!');
+        };
+
+        window.deleteMod = (index) => {
+            publicMods.splice(index, 1);
+            localStorage.setItem('bloxd_ti_public_hub', JSON.stringify(publicMods));
+            renderPublicMods();
+        };
+
+        renderPublicMods();
+    </script>
+</body>
+  </html>
+  
